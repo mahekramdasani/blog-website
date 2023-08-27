@@ -1,6 +1,0 @@
-[submodule "blog"]
-	path = blog
-	url = https://github.com/me-harshil/blog-website.git
-[submodule "blog-backend"]
-	path = blog-backend
-	url = https://github.com/me-harshil/blog-backend
