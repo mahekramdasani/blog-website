@@ -1,10 +1,40 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-export default function Signup() {
+export default function Signup(props) {
+  const navigate = useNavigate();
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const url = "http://127.0.0.1:8000/api/auth/createuser";
+    const data = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: e.target.name.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    });
+    const response = await data.json();
+    console.log(response);
+    if(response.access){
+      localStorage.setItem("token", response.access);
+      props.showAlert("Account created successfully", "success");
+      navigate("/");
+
+    }
+    else{
+      props.showAlert("User already exists", "danger");
+    }
+  }
+
   return (
     <div className="container my-4">
     <h2>Signup</h2>
-    <form method="post">
+    <form onSubmit={handleSubmit}> 
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Name

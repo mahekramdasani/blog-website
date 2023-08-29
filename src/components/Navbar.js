@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const logout = () => {
+    localStorage.removeItem("token");
+  };
   let location = useLocation();
   useEffect(() => {}, [location]);
   return (
@@ -58,14 +61,33 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-
-            {/* login signup button */}
-            <Link className="btn btn-primary mx-2" to="/login" role="button">
-              Login
-            </Link>
-            <Link className="btn btn-primary mx-2" to="/signup" role="button">
-              Signup
-            </Link>
+            {!localStorage.getItem("token") ? (
+              <>
+                <Link
+                  className="btn btn-primary mx-2"
+                  to="/login"
+                  role="button"
+                >
+                  Login
+                </Link>
+                <Link
+                  className="btn btn-primary mx-2"
+                  to="/signup"
+                  role="button"
+                >
+                  Signup
+                </Link>
+              </>
+            ) : (
+              <Link
+                className="btn btn-primary mx-2"
+                to="/login"
+                role="button"
+                onClick={logout}
+              >
+                Logout
+              </Link>
+            )}
           </div>
         </div>
       </nav>
