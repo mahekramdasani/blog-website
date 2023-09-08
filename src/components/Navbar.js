@@ -52,12 +52,12 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/technews" ? "active" : ""
+                    location.pathname === "/techblogs" ? "active" : ""
                   }`}
                   aria-current="page"
-                  to="/technews"
+                  to="/techblogs"
                 >
-                  Tech News
+                  Tech Blogs
                 </Link>
               </li>
             </ul>

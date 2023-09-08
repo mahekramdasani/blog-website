@@ -9,8 +9,11 @@ import { useState } from "react";
 import AddPost from "./components/AddPost";
 import BlogState from "./context/BlogState";
 import PostPage from "./components/PostPage";
+import News from "./components/TechBlogsAPI/News";
 
 function App() {
+  // const apiKey = process.env.REACT_APP_NEWS_API;
+  const apiKey = "99533cbf3a464feab533d158f0a469f2";
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
     setAlert({
@@ -21,6 +24,7 @@ function App() {
       setAlert(null);
     }, 1500);
   };
+
   return (
     <>
       <BlogState showAlert={showAlert}>
@@ -37,8 +41,19 @@ function App() {
               path="/addpost"
               element={<AddPost showAlert={showAlert} />}
             />
-            <Route path="/posts/:id" element={<PostPage/>} />
-          
+            <Route path="/posts/:id" element={<PostPage />} />
+            <Route
+              path="/techblogs"
+              element={
+                <News
+                  apiKey={apiKey}
+                  key="technology"  
+                  pageSize={12}
+                  country="in"
+                  category="technology"
+                />
+              }
+            />
           </Routes>
         </Router>
       </BlogState>
