@@ -38,6 +38,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
+    'blog_api.apps.BlogApiConfig',
     'user_api.apps.UserApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',

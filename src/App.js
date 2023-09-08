@@ -1,11 +1,14 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
 import Blogs from "./components/Blogs";
 import Alert from "./components/Alert";
 import { useState } from "react";
+import AddPost from "./components/AddPost";
+import BlogState from "./context/BlogState";
+import PostPage from "./components/PostPage";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -20,17 +23,25 @@ function App() {
   };
   return (
     <>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Alert alert={alert} />
-        </div>
-        <Routes>
-          <Route path="/" element={<Blogs showAlert={showAlert} />} />
-          <Route path="/login" element={<Login showAlert={showAlert} />} />
-          <Route path="/signup" element={<Signup showAlert={showAlert} />} />
-        </Routes>
-      </Router>
+      <BlogState showAlert={showAlert}>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Alert alert={alert} />
+          </div>
+          <Routes>
+            <Route path="/" element={<Blogs showAlert={showAlert} />} />
+            <Route path="/login" element={<Login showAlert={showAlert} />} />
+            <Route path="/signup" element={<Signup showAlert={showAlert} />} />
+            <Route
+              path="/addpost"
+              element={<AddPost showAlert={showAlert} />}
+            />
+            <Route path="/posts/:id" element={<PostPage/>} />
+          
+          </Routes>
+        </Router>
+      </BlogState>
     </>
   );
 }

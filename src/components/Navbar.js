@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear()
   };
   let location = useLocation();
   useEffect(() => {}, [location]);
