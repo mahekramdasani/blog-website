@@ -7,19 +7,26 @@ from django.utils import timezone
 
 
 
-
 # Create your views here.
 class Blog(APIView):
     # Fetch all blogs 
     def get(self, request):
         blog_objs = BlogData.objects.all()
         serializer = BlogSerializer(blog_objs, many=True)
-        print(timezone.now)
         return Response(serializer.data, status=200)
 
     # Create a blog
     def post(self, request):
-        serializer = BlogCreateSerializer(data=request.data)
+        if 'image' in request.FILES:
+            # Handle form data with image upload
+            serializer = BlogCreateSerializer(data=request.data, context={'request': request})
+        else:
+            # Handle JSON data
+            serializer = BlogCreateSerializer(data=request.data)
+        # serializer = BlogCreateSerializer(data=request.data)
+        # form = BlogForm(request.POST, request.FILES)
+        # if form.is_valid():
+        #     form.save()
         if serializer.is_valid():
             serializer.save()
             return Response({"data": serializer.data, "message": "blog create successfully"}, status=201)

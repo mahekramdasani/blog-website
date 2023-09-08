@@ -6,10 +6,13 @@ import BlogContext from "../context/blogContext";
 export default function AddPost(props) {
   const { addBlog } = useContext(BlogContext);
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [value, setValue] = useState("");
   let toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
+    // ['link', 'image'],
 
     [{ header: 1 }, { header: 2 }], // custom button values
     [{ list: "ordered" }, { list: "bullet" }],
@@ -38,12 +41,19 @@ export default function AddPost(props) {
   });
 
   const onChange = (e) => {
+    
     setPost({
       ...post,
       [e.target.name]: e.target.value,
       description: value,
     });
   };
+
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  }
 
   const resetPost = (e) => {
     // e.preventDefault();
@@ -59,7 +69,16 @@ export default function AddPost(props) {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const result = await addBlog(post.title, post.description, post.tag, post.author);
+    if(selectedImage === null){
+      setSelectedImage("images/default.jpg")
+    }
+    const result = await addBlog(
+      post.title,
+      post.description,
+      post.tag,
+      post.author,
+      selectedImage
+    );
     if (result) {
       setPost({
         title: "",
@@ -90,6 +109,12 @@ export default function AddPost(props) {
             onChange={onChange}
             value={post.title}
           />
+        </div>
+        <div className="mb-3">
+        <label htmlFor="image" className="form-label me-2">
+            Upload Image 
+          </label>
+        <input type="file" accept="image/*" onChange={handleImageChange} id="image" name="image"/>
         </div>
         <div className="mb-3">
           <label htmlFor="postContent" className="form-label">

@@ -8,11 +8,14 @@ export default function PostPage() {
   const [clean, setclean] = useState(null);
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [imageUrl, setimageUrl] = useState(null);
   useEffect(() => {
     loadBlog(id)
       .then((data) => {
         setPost(data);
         cleanD(data.description);
+        let image = "http://127.0.0.1:8000/" + data.image;
+        setimageUrl(image);
       })
       .catch((error) => {
         console.log(error);
@@ -39,6 +42,7 @@ export default function PostPage() {
             </p>
           </div>
           <h2 className="card-header pb-4">{post.title}</h2>
+          <img src={imageUrl} className="card-img-top" alt="..." />
           <div className="card-body">
             <p
               className="card-text"

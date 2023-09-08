@@ -14,16 +14,26 @@ const BlogState = (props) => {
     setBlogs(data);
   };
 
-  const addBlog = async (title, description, tag, author) => {
+  const addBlog = async (title, description, tag, author,image) => {
     try {
       const url = "http://127.0.0.1:8000/api/blogs/addblog";
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("tag", tag);
+      formData.append("author", author);
+      formData.append("image", image);
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, description, tag, author }),
+        body: formData,
       });
+      // const response = await fetch(url, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ title, description, tag, author }),
+      // });
       const data = await response.json();
       // console.log(data.non_field_errors);
       if (!data.non_field_errors) {
