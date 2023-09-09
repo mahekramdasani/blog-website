@@ -13,7 +13,8 @@ import News from "./components/TechBlogsAPI/News";
 
 function App() {
   // const apiKey = process.env.REACT_APP_NEWS_API;
-  const apiKey = "99533cbf3a464feab533d158f0a469f2";
+  // const apiKey = "99533cbf3a464feab533d158f0a469f2";
+  const apiKey = "e7aa89b2e9b142f89ac750b2e37b7950"
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
     setAlert({
